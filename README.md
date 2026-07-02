@@ -1,6 +1,6 @@
 # 🏛️ Website Pelayanan Administrasi Dukcapil Mandiri
 
-Website ini adalah platform pelayanan publik digital yang dirancang untuk mempermudah warga dalam melakukan pengurusan dokumen kependudukan secara mandiri (seperti KTP Baru, Kartu Keluarga, dan Akta Kelahiran)[cite: 1, 2]. Proyek ini dibangun secara kolaboratif sebagai tugas kelompok untuk memenuhi penilaian mata kuliah **[Nama Mata Kuliah Anda]**[cite: 1, 2].
+Website ini adalah platform pelayanan publik digital yang dirancang untuk mempermudah warga dalam melakukan pengurusan dokumen kependudukan secara mandiri (seperti KTP Baru, Kartu Keluarga, dan Akta Kelahiran)[cite: 1, 2]. Proyek ini dibangun secara kolaboratif sebagai tugas kelompok untuk memenuhi penilaian mata kuliah **Pemrograman Web Lanjut**[cite: 1, 2].
 
 ---
 
@@ -10,10 +10,10 @@ Sistem ini dibagi menjadi **4 modul utama** dengan tingkat kompleksitas yang set
 
 | Anggota Tim | Peran Utama | Tanggung Jawab & Fitur yang Dikerjakan |
 | :--- | :--- | :--- |
-| **Steffany**<br>NIM: `[NIM]` | **Backend Architect** | - Perancangan skema, relasi database, dan migrasi tabel[cite: 1, 2].<br>- Membuat RESTful API CRUD untuk seluruh data kependudukan & berkas[cite: 1, 2].<br>- Mengamankan sistem autentikasi pendaftaran berbasis NIK menggunakan hash enkripsi[cite: 1, 2]. |
-| **Gibran Al Ghifari**<br>NIM: `[NIM]` | **Frontend: Citizen Portal** | - Implementasi UI Landing Page dan halaman informasi syarat layanan[cite: 1, 2].<br>- Membangun form pengajuan interaktif bagi warga (Input data + unggah berkas syarat)[cite: 1, 2].<br>- Validasi input sisi klien (Format 16 digit NIK, ukuran file, dan ekstensi berkas)[cite: 1, 2]. |
-| **Fabio**<br>NIM: `[NIM]` | **Frontend: Admin Dashboard** | - Membuat panel Dashboard Petugas Dukcapil untuk proses verifikasi & approval berkas[cite: 1, 2].<br>- Mengembangkan sistem penyaringan (filter), pencarian, dan manajemen antrean status berkas[cite: 1, 2].<br>- Menyajikan visualisasi tren data atau grafik statistik kependudukan sederhana[cite: 1, 2]. |
-| **Wilson Fernando**<br>NIM: `[NIM]` | **Fullstack Integration & QA** | - Sinkronisasi dan menghubungkan (slicing) API Backend ke dalam komponen UI Frontend[cite: 1, 2].<br>- Mengembangkan fitur *Real-Time Tracking Status* pengajuan dokumen untuk sisi akun warga[cite: 1, 2].<br>- Bertanggung jawab penuh atas pengujian fungsionalitas (End-to-End Testing) dan penyusunan dokumentasi[cite: 1, 2]. |
+| **Steffany**<br>NIM: `1062527` | **Backend Architect** | - Perancangan skema, relasi database, dan migrasi tabel[cite: 1, 2].<br>- Membuat RESTful API CRUD untuk seluruh data kependudukan & berkas[cite: 1, 2].<br>- Mengamankan sistem autentikasi pendaftaran berbasis NIK menggunakan hash enkripsi[cite: 1, 2]. |
+| **Gibran Al Ghifari**<br>NIM: `1062508` | **Frontend: Citizen Portal** | - Implementasi UI Landing Page dan halaman informasi syarat layanan[cite: 1, 2].<br>- Membangun form pengajuan interaktif bagi warga (Input data + unggah berkas syarat)[cite: 1, 2].<br>- Validasi input sisi klien (Format 16 digit NIK, ukuran file, dan ekstensi berkas)[cite: 1, 2]. |
+| **Fabio**<br>NIM: `1062507` | **Frontend: Admin Dashboard** | - Membuat panel Dashboard Petugas Dukcapil untuk proses verifikasi & approval berkas[cite: 1, 2].<br>- Mengembangkan sistem penyaringan (filter), pencarian, dan manajemen antrean status berkas[cite: 1, 2].<br>- Menyajikan visualisasi tren data atau grafik statistik kependudukan sederhana[cite: 1, 2]. |
+| **Wilson Fernando**<br>NIM: `1062530` | **Fullstack Integration & QA** | - Sinkronisasi dan menghubungkan (slicing) API Backend ke dalam komponen UI Frontend[cite: 1, 2].<br>- Mengembangkan fitur *Real-Time Tracking Status* pengajuan dokumen untuk sisi akun warga[cite: 1, 2].<br>- Bertanggung jawab penuh atas pengujian fungsionalitas (End-to-End Testing) dan penyusunan dokumentasi[cite: 1, 2]. |
 
 ---
 
