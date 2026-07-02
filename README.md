@@ -1,58 +1,53 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏛️ Website Pelayanan Administrasi Dukcapil Mandiri
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website ini adalah platform pelayanan publik digital untuk mempermudah warga dalam mengurus dokumen kependudukan secara mandiri (seperti KTP, KK, dan Akta Kelahiran). Proyek ini dibangun sebagai tugas kelompok untuk mata kuliah **[Nama Mata Kuliah, contoh: Pemrograman Web / Rekayasa Perangkat Lunak]**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 👥 Anggota Kelompok & Pembagian Tugas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Berikut adalah anggota Kelompok **[Nama/Nomor Kelompok]** beserta tanggung jawab utama dalam pengembangan proyek:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Nama Anggota | NIM | Peran Utama | Tanggung Jawab / Fitur yang Dikerjakan |
+| :--- | :--- | :--- | :--- |
+| **[Nama Ketua]** | `[NIM]` | Project Manager & Backend | - Setup database & autentikasi (JWT)<br>- API CRUD Data Kependudukan<br>- Integrasi enkripsi file |
+| **[Nama Anggota 2]** | `[NIM]` | Frontend Developer | - Slicing UI Dashboard Warga & Admin<br>- Integrasi API Pengajuan Dokumen<br>- Validasi form sisi klien |
+| **[Nama Anggota 3]** | `[NIM]` | UI/UX Designer & QA | - Desain Figma & User Flow<br>- Testing fitur (Blackbox Testing)<br>- Penyusunan dokumentasi & README |
+| **[Nama Anggota 4]** | `[NIM]` | Fullstack Helper | - Fitur Tracking Status Pengajuan<br>- Sistem Notifikasi WhatsApp/Email Berbasis Trigger |
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🛠️ Tech Stack (Teknologi yang Digunakan)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Kolaborasi kami menggunakan ekosistem teknologi berikut:
+* **Frontend:** [Contoh: React.js + Tailwind CSS / Vue.js]
+* **Backend:** [Contoh: Node.js + Express / Laravel]
+* **Database:** [Contoh: PostgreSQL / MySQL]
+* **Tools Kolaborasi:** Figma (Desain), Trello/Notion (Manajemen Tugas), Git & GitHub (Version Control).
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## 📌 Alur Kerja Git Kelompok (Git Workflow)
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Untuk menghindari konflik kode (*merge conflicts*), kelompok kami menerapkan aturan Branching Git sebagai berikut:
 
+1. **`main` / `master`**: Branch produksi yang siap dinilai. Tidak ada yang boleh push langsung ke sini.
+2. **`development`**: Branch utama untuk menggabungkan semua fitur yang sudah selesai diuji.
+3. **`feature/[nama-fitur]`**: Branch masing-masing anggota untuk ngoding fitur spesifik (contoh: `feature/login-page`, `feature/api-kk`).
+
+**Cara Berkontribusi di Project Ini:**
 ```bash
-composer require laravel/boost --dev
+# 1. Clone repositori ini
+git clone [https://github.com/](https://github.com/)[username]/[repo-name].git
 
-php artisan boost:install
-```
+# 2. Pindah ke branch development dan pastikan up-to-date
+git checkout development
+git pull origin development
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+# 3. Buat branch fitur baru sesuai tugas Anda
+git checkout -b feature/fitur-saya
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 4. Setelah selesai, push ke GitHub dan buat Pull Request (PR) ke branch development
+git add .
+git commit -m "feat: menyelesaikan halaman pengajuan KTP"
+git push origin feature/fitur-saya
