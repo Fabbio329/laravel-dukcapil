@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->string('nik', 16)->primary();
-            $table->string('nama_lengkap');
-            $table->string('password');
-            $table->enum('role', ['warga', 'admin'])->default('warga');
+        Schema::create('log_aktivitas', function (Blueprint $table) {
+            $table->id('id_log');
+            $table->string('nik_pelaku', 16);
+            $table->string('aksi');
+            $table->timestamp('waktu_kejadian')->useCurrent();
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('log_aktivitas');
     }
-    
 };
