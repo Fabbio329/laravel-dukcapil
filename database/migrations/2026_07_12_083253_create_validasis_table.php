@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('log_aktivitas', function (Blueprint $table) {
-            $table->id('id_log');
-            $table->string('nik_pelaku', 16);
-            $table->string('aksi');
-            $table->timestamp('waktu_kejadian')->useCurrent();
+        Schema::create('validasis', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('pengajuan_id')->constrained('pengajuans')->onDelete('cascade');
+            $table->foreignId('admin_id')->constrained('users')->onDelete('cascade');
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('log_aktivitas');
+        Schema::dropIfExists('validasis');
     }
 };

@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dokumen_syarat', function (Blueprint $table) {
-            $table->id('id_dokumen'); 
-            $table->unsignedBigInteger('id_pengajuan'); 
-            $table->string('nama_file');
-            $table->string('jenis_berkas');
+        Schema::create('pelayanans', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_layanan', 50); // Contoh: KTP, KK, Akta
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dokumen_syarats');
+        Schema::dropIfExists('pelayanans');
     }
 };
