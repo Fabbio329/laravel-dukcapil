@@ -7,29 +7,27 @@
 <body class="container mt-5" style="max-width: 600px;">
     <h2>Upload Dokumen Syarat Pembuatan: {{ $layanan->nama_layanan }}</h2>
     
-    <form action="/warga/layanan/upload/{{ $layanan->id }}" method="POST" enctype="multipart/form-data" class="mt-4">
-        @csrf
+    <form action="/warga/layanan/upload" method="POST" enctype="multipart/form-data">
+    @csrf
+    <!-- Mengirim ID Layanan secara tersembunyi -->
+    <input type="hidden" name="pelayanan_id" value="{{ $layanan->id }}">
 
-        <!-- Jika memilih KK / AKTA, tampilkan syarat upload KTP -->
-        @if(strtolower($layanan->nama_layanan) != 'ktp')
-        <div class="mb-3">
-            <label class="form-label">Upload Foto / Scan KTP Pemohon</label>
-            <input type="file" name="files[foto_ktp]" class="form-control" required>
-        </div>
-        @endif
+    <div class="mb-3">
+        <label class="form-label">Upload Foto / Scan KTP Pemohon</label>
+        <input type="file" name="berkas[foto_ktp]" class="form-control" required>
+    </div>
 
-        <!-- Syarat umum lainnya -->
-        <div class="mb-3">
-            <label class="form-label">Upload Surat Pengantar RT/RW (Berkas Asli)</label>
-            <input type="file" name="files[surat_pengantar]" class="form-control" required>
-        </div>
+    <div class="mb-3">
+        <label class="form-label">Upload Surat Pengantar RT/RW (Berkas Asli)</label>
+        <input type="file" name="berkas[surat_pengantar]" class="form-control" required>
+    </div>
 
-        <div class="mb-3">
-            <label class="form-label">Upload Foto Kartu Keluarga Pendukung</label>
-            <input type="file" name="files[kartu_keluarga]" class="form-control" required>
-        </div>
+    <div class="mb-3">
+        <label class="form-label">Upload Foto Kartu Keluarga Pendukung</label>
+        <input type="file" name="berkas[kk_pendukung]" class="form-control" required>
+    </div>
 
-        <button type="submit" class="btn btn-primary w-100 mt-3">Kirim Berkas Pengajuan</button>
-    </form>
+    <button type="submit" class="btn btn-primary w-100">Kirim Berkas Pengajuan</button>
+</form>
 </body>
 </html>
