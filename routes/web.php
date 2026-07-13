@@ -26,3 +26,9 @@ Route::get('/admin/laporan/periksa/{id}', [SistemPelayananController::class, 'pe
 
 // 3. Proses Cetak Dokumen
 Route::get('/admin/laporan/cetak/{id}', [SistemPelayananController::class, 'cetakDokumen']);
+
+// Halaman riwayat khusus warga (Tanpa Tombol Validasi)
+Route::get('/warga/riwayat', [SistemPelayananController::class, 'riwayatWarga']);
+
+// Proses menyimpan keputusan final validasi admin
+Route::post('/admin/laporan/validasi/{id}', [SistemPelayananController::class, 'simpanValidasi']);

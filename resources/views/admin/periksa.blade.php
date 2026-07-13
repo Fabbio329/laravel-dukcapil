@@ -29,32 +29,54 @@
                     @foreach($pengajuan->dokumen as $dok)
                         <li class="mb-2">
                             <strong>{{ $dok->nama_syarat }} :</strong> 
-                            <a href="{{ asset('storage/' . $file_path ?? $dok->file_path) }}" target="_blank" class="btn btn-xs btn-link p-0">Lihat File Bukti</a>
-                        </li>
+                            <a href="{{ asset('storage/' . $dok->file_path) }}" target="_blank" class="btn btn-xs btn-link p-0">
+    Lihat Dokumen
+</a>
                     @endforeach
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- Form Validasi Keputusan Admin -->
-    <div class="card p-4 mt-4 border-warning">
-        <h5>Formulir Keputusan Validasi</h5>
-        <form action="/admin/laporan/validasi/{{ $pengajuan->id }}" method="POST">
-            @csrf
-            <div class="mb-3">
-                <label>Pilih Status Kelayakan Dokumen</label>
-                <select name="status" class="form-select" required>
-                    <option value="valid">VALID (Setujui & Siap Cetak)</option>
-                    <option value="tidak_valid">TIDAK VALID (Tolak Dokumen)</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label>Catatan Admin (Alasan disetujui / ditolak)</label>
-                <textarea name="catatan" class="form-control" rows="3" placeholder="Contoh: Berkas sesuai atau Berkas KK buram..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-warning">Simpan Keputusan Final</button>
-        </form>
+    <div class="card mt-4 border-primary">
+    <div class="card-header bg-light">
+        <strong>Panel Validasi Berkas & Keputusan Admin</strong>
     </div>
+    <div class="card-body text-center">
+
+        <!-- LANGKAH 1: JIKA STATUS MASIH PENDING (BARU MASUK) -->
+        @if($pengajuan->status == 'pending')
+            <p class="text-muted">Langkah 1: Periksa keabsahan fisik seluruh dokumen yang diunggah warga.</p>
+            <form action="/admin/laporan/validasi/{{ $pengajuan->id }}" method="POST">
+                @csrf
+                <input type="hidden" name="aksi" value="periksa_keabsahan">
+                
+                <button type="submit" name="keabsahan" value="sah" class="btn btn-info text-white me-2 px-4">
+                    ✓ Berkas Sah (Lanjutkan Proses)
+                </button>
+                <button type="submit" name="keabsahan" value="tidak_sah" class="btn btn-danger px-4">
+                    ✕ Berkas Tidak Sah (Otomatis Tolak)
+                </button>
+            </form>
+
+        <!-- LANGKAH 2: JIKA BERKAS SUDAH SAH, TAPI BELUM ADA KEPUTUSAN FINAL -->
+        @elseif($pengajuan->status == 'lolos_validasi')
+            <div class="alert alert-info d-inline-block px-4">✓ Berkas dinyatakan Sah. Silakan tentukan keputusan final hukum pengajuan ini.</div>
+            <form action="/admin/laporan/validasi/{{ $pengajuan->id }}" method="POST" class="mt-2">
+                @csrf
+                <input type="hidden" name="aksi" value="keputusan_final">
+                
+                <button type="submit" name="status_final" value="approved" class="btn btn-success me-2 px-4">
+                    ✓ SETUJUI PENGAJUAN (SELESAI)
+                </button>
+                <button type="submit" name="status_final" value="rejected" class="btn btn-danger px-4">
+                    ✕ TOLAK PENGAJUAN (FINAL)
+                </button>
+            </form>
+        @endif
+
+    </div>
+</div>
+</div>
 </body>
 </html>

@@ -50,27 +50,35 @@ class SistemPelayananController extends Controller
     }
 
     // Simpan File ke Folder Storage & Catat ke Database
-    public function simpanUpload(Request $request) {
-        $pengajuan = Pengajuan::create([
-            'user_id' => 2,
-            'pelayanan_id' => $request->pelayanan_id,
-            'status' => 'pending'
-        ]);
+    public function simpanUpload(Request $request)
+{
+    // 1. Buat 1 baris data pengajuan induk terlebih dahulu
+    $pengajuan = \App\Models\Pengajuan::create([
+        'user_id' => 2, // Mengunci sementara ke ID Warga Contoh hasil seeder Anda
+        'pelayanan_id' => $request->pelayanan_id,
+        'status' => 'pending'
+    ]);
 
-        if ($request->hasFile('berkas')) {
-            foreach ($request->file('berkas') as $nama_form => $file) {
-                $path = $file->store('dokumen_warga', 'public');
-                DokumenPersyaratan::create([
-                    'pengajuan_id' => $pengajuan->id,
-                    'nama_syarat' => $nama_form,
-                    'file_path' => $path
-                ]);
-            }
+    // 2. Periksa apakah ada file berkas yang diunggah
+    if ($request->hasFile('berkas')) {
+        foreach ($request->file('berkas') as $nama_syarat => $file) {
+            
+            // Simpan fisik file ke folder: storage/app/public/dokumen_warga
+            $path = $file->store('dokumen_warga', 'public');
+
+            // Catat data jalurnya ke tabel dokumen_persyaratans
+            \App\Models\DokumenPersyaratan::create([
+                'pengajuan_id' => $pengajuan->id,
+                'nama_syarat'  => ucwords(str_replace('_', ' ', $nama_syarat)), // Mengubah 'foto_ktp' jadi 'Foto Ktp'
+                'file_path'    => $path
+            ]);
         }
-
-        return redirect('/warga/biodata')->with('success', 'Berkas berhasil dikirim ke Admin!');
     }
 
+    // 3. Setelah sukses, lempar warga ke dashboard admin untuk melihat laporan datanya
+    // 3. Setelah sukses, alihkan warga ke halaman riwayat mereka sendiri
+    return redirect('/warga/riwayat')->with('success', 'Berkas pengajuan berhasil dikirim!');
+}
     // Halaman Dashboard Utama Admin
     public function laporanAdmin() {
         $semua_pengajuan = Pengajuan::with(['user.biodata', 'pelayanan'])->get();
@@ -82,4 +90,40 @@ class SistemPelayananController extends Controller
         $pengajuan = Pengajuan::with(['user.biodata', 'dokumen'])->findOrFail($id);
         return view('admin.periksa', compact('pengajuan'));
     }
+
+    public function riwayatWarga() 
+{
+    // Mengambil data pengajuan khusus untuk warga dengan user_id = 2
+    $pengajuan_warga = \App\Models\Pengajuan::with(['pelayanan'])
+                        ->where('user_id', 2)
+                        ->get();
+
+    return view('warga.riwayat', compact('pengajuan_warga'));
+}
+
+public function simpanValidasi(Request $request, $id)
+{
+    $pengajuan = \App\Models\Pengajuan::findOrFail($id);
+    $aksi = $request->input('aksi');
+
+    if ($aksi == 'periksa_keabsahan') {
+        $keabsahan = $request->input('keabsahan');
+        
+        if ($keabsahan == 'tidak_sah') {
+            // Jika tidak sah, langsung otomatis ditolak final
+            $pengajuan->update(['status' => 'rejected']);
+            return redirect('/admin/laporan')->with('error', 'Pengajuan otomatis ditolak karena berkas tidak sah.');
+        } else {
+            // Jika sah, status naik tingkat menjadi lolos validasi berkas
+            $pengajuan->update(['status' => 'lolos_validasi']);
+            return redirect()->back()->with('success', 'Berkas dinyatakan SAH. Silakan tentukan keputusan final.');
+        }
+    }
+
+    if ($aksi == 'keputusan_final') {
+        $status_final = $request->input('status_final'); // 'approved' atau 'rejected'
+        $pengajuan->update(['status' => $status_final]);
+        return redirect('/admin/laporan')->with('success', 'Keputusan final berhasil disimpan.');
+    }
+}
 }
