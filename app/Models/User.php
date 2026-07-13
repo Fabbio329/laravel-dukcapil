@@ -17,9 +17,15 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    // Tambahkan di dalam class User
     public function biodata()
     {
-        return $this->hasOne(Biodata::class);
+        return $this->hasOne(Biodata::class, 'user_id');
+    }
+
+    public function pengajuan()
+    {
+        return $this->hasMany(Pengajuan::class, 'user_id');
     }
 
     /**

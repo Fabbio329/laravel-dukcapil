@@ -12,12 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->string('nik', 16)->primary();
-            $table->string('nama_lengkap');
+            $table->id(); // <-- PASTIKAN BARIS INI ADA DAN TIDAK TERHAPUS
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['warga', 'admin'])->default('warga');
+            $table->rememberToken();
             $table->timestamps();
         });
+        
+        // ... baris kode tabel password_reset_tokens & sessions di bawahnya biarkan saja
     }
 
     public function down(): void

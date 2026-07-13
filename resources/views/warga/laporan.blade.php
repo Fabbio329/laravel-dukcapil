@@ -17,7 +17,10 @@
         <tbody>
             @forelse($pengajuan_warga as $data)
             <tr>
+                <!-- Kolom 1: Nama Layanan -->
                 <td>{{ $data->pelayanan->nama_layanan }}</td>
+                
+                <!-- Kolom 2: Daftar Dokumen -->
                 <td>
                     <ul>
                         @foreach($data->dokumen as $dok)
@@ -25,7 +28,17 @@
                         @endforeach
                     </ul>
                 </td>
-                <td><span class="badge bg-secondary">{{ $data->status }}</span></td>
+                
+                <!-- Kolom 3: Status -->
+                <td>
+                    @if($data->status == 'pending')
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    @elseif($data->status == 'valid')
+                        <span class="badge bg-success">Valid</span>
+                    @else
+                        <span class="badge bg-danger">Tidak Valid</span>
+                    @endif
+                </td>
             </tr>
             @empty
             <tr>
