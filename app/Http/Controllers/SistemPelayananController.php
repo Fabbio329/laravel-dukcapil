@@ -26,7 +26,7 @@ class SistemPelayananController extends Controller
 
     // 2. Simpan paksa menggunakan Model Eloquent
     \App\Models\Biodata::create([
-        'user_id' => 2, // Mengunci sementara ke ID warga contoh hasil seeder Anda
+        'user_id' => auth()->id(), // Mengunci sementara ke ID warga contoh hasil seeder Anda
         'nik'     => $nik,
         'nama'    => $nama,
         'alamat'  => $alamat,
@@ -54,7 +54,7 @@ class SistemPelayananController extends Controller
 {
     // 1. Buat 1 baris data pengajuan induk terlebih dahulu
     $pengajuan = \App\Models\Pengajuan::create([
-        'user_id' => 2, // Mengunci sementara ke ID Warga Contoh hasil seeder Anda
+        'user_id' => auth()->id(), // Mengunci sementara ke ID Warga Contoh hasil seeder Anda
         'pelayanan_id' => $request->pelayanan_id,
         'status' => 'pending'
     ]);
