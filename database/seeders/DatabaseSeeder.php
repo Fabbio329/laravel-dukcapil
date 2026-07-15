@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
         // Isi langsung menggunakan Query Builder untuk menghindari proteksi model
         DB::table('users')->insert([
             [
-                'id' => 1,
+                'id' => 'admin',
                 'name' => 'Admin Dukcapil',
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('password'),
@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 2,
+                'id' => 'warga',
                 'name' => 'Warga Contoh',
                 'email' => 'warga@gmail.com',
                 'password' => Hash::make('password'),

@@ -15,6 +15,10 @@ class WargaMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (! $request->user() || ! $request->user()->isWarga()) {
+            abort(403,'Anda Tidak Memiliki Akses ke Halaman ini.');
+        }
+        
         return $next($request);
     }
 }

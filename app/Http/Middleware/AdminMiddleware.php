@@ -15,6 +15,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (! $request->user() || ! $request->user()->isAdmin()) {
+            abort(403, 'Anda Tidak Memiliki Akses ke Halaman Ini.');
+        }
+
         return $next($request);
     }
 }
