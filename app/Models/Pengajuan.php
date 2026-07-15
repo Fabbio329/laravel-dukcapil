@@ -2,12 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pengajuan extends Model
 {
+    use HasFactory;
+
     protected $table = 'pengajuans';
-    protected $fillable = ['user_id', 'pelayanan_id', 'status'];
+
+    // WAJIB ADA 'user_id' DI SINI
+    protected $fillable = [
+        'user_id', 
+        'pelayanan_id',
+        'status',
+    ];
 
     public function user()
     {
@@ -22,10 +31,5 @@ class Pengajuan extends Model
     public function dokumen()
     {
         return $this->hasMany(DokumenPersyaratan::class, 'pengajuan_id');
-    }
-
-    public function validasi()
-    {
-        return $this->hasOne(Validasi::class, 'pengajuan_id');
     }
 }

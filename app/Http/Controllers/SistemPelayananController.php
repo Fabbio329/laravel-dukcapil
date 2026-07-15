@@ -12,9 +12,9 @@ class SistemPelayananController extends Controller
 {
     // Tampilkan Form Biodata
     public function formBiodata() {
-        // Cari apakah warga sudah pernah mengisi biodata sebelumnya
-        $biodata = Biodata::where('user_id', auth()->id())->first();
-        return view('warga.biodata', compact('biodata'));
+    // Mengambil profil warga yang login beserta biodatanya secara pasti
+    $biodata = Biodata::where('user_id', auth()->id())->firstOrFail();
+    return view('warga.biodata', compact('biodata'));
     }
 
     // Simpan/Update Biodata

@@ -16,14 +16,15 @@
             <table class="table table-striped table-hover align-middle">
                 <thead>
                     <tr>
-                        <th>No</th>
+                        <th style="width: 5%">No</th>
                         <th>Jenis Layanan</th>
                         <th>Tanggal Pengajuan</th>
                         <th>Status Dokumen</th>
+                        <th style="width: 15%">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                   @forelse($pengajuan_warga as $index => $p)
+                    @forelse($pengajuan_warga as $index => $p)
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td><strong>{{ $p->pelayanan->nama_layanan }}</strong></td>
@@ -41,10 +42,21 @@
                                 <span class="badge bg-secondary">{{ $p->status }}</span>
                             @endif
                         </td>
+                        <td>
+                            @if($p->status == 'approved')
+                                <a href="/warga/cetak/{{ $p->id }}" target="_blank" class="btn btn-sm btn-success fw-bold">
+                                    <i class="bi bi-printer"></i> Cetak Dokumen
+                                </a>
+                            @else
+                                <button class="btn btn-sm btn-light text-muted fw-bold" disabled>
+                                    <i class="bi bi-hourglass-split"></i> Belum Tersedia
+                                </button>
+                            @endif
+                        </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center text-muted py-4">Anda belum memiliki riwayat pengajuan.</td>
+                        <td colspan="5" class="text-center text-muted py-4">Anda belum memiliki riwayat pengajuan.</td>
                     </tr>
                     @endforelse
                 </tbody>

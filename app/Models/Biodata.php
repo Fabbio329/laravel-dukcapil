@@ -11,14 +11,13 @@ class Biodata extends Model
 
     protected $table = 'biodatas';
 
-    // WAJIB: Daftarkan kolom agar bisa disimpan ke database
+    // WAJIB: Daftarkan semua kolom yang ingin diisi melalui form registrasi
     protected $fillable = [
         'user_id',
         'nik',
         'nama',
         'alamat',
         'no_hp',
-        'jenis_kelamin',
     ];
 
     public function user()

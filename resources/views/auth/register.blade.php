@@ -26,45 +26,53 @@
 
             <form action="/register" method="POST">
                 @csrf
-
-                <!-- Input Nama Lengkap -->
+                
+                <!-- Box Penampil Error Validasi -->
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                
+                <!-- Akun Utama -->
                 <div class="mb-3">
-                    <label for="name" class="form-label text-secondary small fw-bold">Nama Lengkap</label>
-                    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Nama sesuai KTP" required>
-                    @error('name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <label class="form-label">Nama Lengkap</label>
+                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
                 </div>
-
-                <!-- Input Email -->
                 <div class="mb-3">
-                    <label for="email" class="form-label text-secondary small fw-bold">Alamat Email</label>
-                    <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="nama@email.com" required>
-                    @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
                 </div>
-
-                <!-- Input Password -->
                 <div class="mb-3">
-                    <label for="password" class="form-label text-secondary small fw-bold">Kata Sandi (Min. 8 Karakter)</label>
-                    <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="••••••••" required>
-                    @error('password')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <label class="form-label">Kata Sandi</label>
+                    <input type="password" name="password" class="form-control" required>
                 </div>
 
-                <!-- Konfirmasi Password (Wajib ada 'name="password_confirmation"' untuk validasi 'confirmed') -->
-                <div class="mb-4">
-                    <label for="password_confirmation" class="form-label text-secondary small fw-bold">Ulangi Kata Sandi</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="••••••••" required>
+                <hr class="my-4">
+                <h5 class="fw-bold text-secondary mb-3">Data Kependudukan (Biodata)</h5>
+
+                <!-- Biodata Tambahan -->
+                <div class="mb-3">
+                    <label class="form-label">NIK (Nomor Induk Kependudukan)</label>
+                    <input type="text" name="nik" class="form-control" value="{{ old('nik') }}" placeholder="16 digit angka" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nomor HP</label>
+                    <input type="text" name="no_hp" class="form-control" value="{{ old('no_hp') }}" placeholder="Maksimal 15 digit" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Alamat Rumah</label>
+                    <textarea name="alamat" class="form-control" rows="3" required>{{ old('alamat') }}</textarea>
                 </div>
 
-                <!-- Tombol Submit -->
-                <button type="submit" class="btn btn-primary w-100 py-2 mb-3 fw-bold">Daftar Sekarang</button>
+                <button type="submit" class="btn btn-primary w-100 mb-3">Daftar Akun Baru</button>
             </form>
 
-            <div class="text-center">
+            <div class="text-center border-top pt-3">
                 <span class="text-muted small">Sudah punya akun?</span>
                 <a href="/login" class="small text-decoration-none fw-bold">Masuk di sini</a>
             </div>

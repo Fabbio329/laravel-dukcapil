@@ -22,13 +22,16 @@ Route::middleware(['auth'])->group(function () {
     
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // Dialihkan otomatis ke halaman riwayat warga saat mengakses "/"
+    // BUGFIX: Dialihkan secara dinamis sesuai role saat mengakses domain utama "/"
     Route::get('/', function () { 
+        if (auth()->user()->isAdmin()) {
+            return redirect('/admin/laporan');
+        }
         return redirect('/warga/riwayat'); 
     });
 
     // ------------------------------------------
-    // ALUR KHUSUS WARGA
+    // ALUR KHUSUS WARGA (Hanya untuk Warga)
     // ------------------------------------------
     Route::get('/warga/biodata', [SistemPelayananController::class, 'formBiodata']);
     Route::post('/warga/biodata', [SistemPelayananController::class, 'simpanBiodata']);
@@ -41,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/warga/riwayat', [SistemPelayananController::class, 'riwayatWarga']);
 
     // ------------------------------------------
-    // ALUR KHUSUS ADMIN
+    // ALUR KHUSUS ADMIN (Hanya untuk Admin)
     // ------------------------------------------
     Route::get('/admin/laporan', [SistemPelayananController::class, 'laporanAdmin']);
     Route::get('/admin/laporan/periksa/{id}', [SistemPelayananController::class, 'periksaData']);
