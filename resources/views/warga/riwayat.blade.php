@@ -1,54 +1,55 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Riwayat Pengajuan Saya</title>
-</head>
-<body class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3>Riwayat Pengajuan Layanan Anda</h3>
-        <a href="/warga/layanan/pilih" class="btn btn-secondary btn-sm">Ajukan Layanan Lain</a>
-    </div>
+@extends('layouts.warga')
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+@section('content')
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold text-secondary">Riwayat Pengajuan Layanan Anda</h3>
+    <a href="/warga/layanan/pilih" class="btn btn-primary fw-bold"><i class="bi bi-plus-lg"></i> Ajukan Layanan Lain</a>
+</div>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <table class="table table-striped table-hover">
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
                 <thead>
                     <tr>
                         <th>No</th>
                         <th>Jenis Layanan</th>
                         <th>Tanggal Pengajuan</th>
-                        <th>Status</th>
+                        <th>Status Dokumen</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($pengajuan_warga as $index => $p)
+                   @forelse($pengajuan_warga as $index => $p)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $p->pelayanan->nama_layanan }}</td>
-                        <td>{{ $p->created_at->format('d M Y H:i') }}</td>
+                        <td><strong>{{ $p->pelayanan->nama_layanan }}</strong></td>
+                        <td>{{ $p->created_at->format('d M Y H:i') }} WIB</td>
                         <td>
                             @if($p->status == 'pending')
-                                <span class="badge bg-warning text-dark">Sedang Diperiksa Admin</span>
-                            @elseif($p->status == 'disetujui')
+                                <span class="badge bg-warning text-dark">Menunggu Pemeriksaan</span>
+                            @elseif($p->status == 'lolos_validasi')
+                                <span class="badge bg-info text-white">Lolos Validasi (Sah)</span>
+                            @elseif($p->status == 'approved')
                                 <span class="badge bg-success">Disetujui / Selesai</span>
-                            @else
+                            @elseif($p->status == 'rejected')
                                 <span class="badge bg-danger">Ditolak</span>
+                            @else
+                                <span class="badge bg-secondary">{{ $p->status }}</span>
                             @endif
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center text-muted">Belum ada riwayat pengajuan berkas.</td>
+                        <td colspan="4" class="text-center text-muted py-4">Anda belum memiliki riwayat pengajuan.</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-</body>
-</html>
+</div>
+@endsection

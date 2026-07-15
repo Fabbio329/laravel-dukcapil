@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('pelayanan_id')->constrained('pelayanans')->onDelete('cascade');
-            $table->enum('status', ['pending', 'valid', 'tidak_valid'])->default('pending');
+            $table->string('status', 50)->default('pending');
             $table->timestamps();
         });
     }

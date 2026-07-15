@@ -10,13 +10,11 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    // Tampilkan form login
     public function showLogin()
     {
         return view('auth.login');
     }
 
-    // Proses login
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -31,24 +29,21 @@ class AuthController extends Controller
         }
 
         $request->session()->regenerate();
-
         $user = Auth::user();
 
-        // Arahkan sesuai role setelah login
+        // Menggunakan redirect langsung tanpa intended agar tidak terjebak riwayat halaman
         if ($user->isAdmin()) {
-            return redirect()->intended('/admin/laporan');
+            return redirect('/admin/laporan');
         }
 
-        return redirect()->intended('/warga/biodata');
+        return redirect('/warga/riwayat');
     }
 
-    // Tampilkan form registrasi (khusus warga; akun admin dibuat lewat seeder)
     public function showRegister()
     {
         return view('auth.register');
     }
 
-    // Proses registrasi warga baru
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -61,21 +56,15 @@ class AuthController extends Controller
             'name'     => $validated['name'],
             'email'    => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role'     => 'warga', // registrasi mandiri selalu berperan sebagai warga
+            'role'     => 'warga',
         ]);
 
-        Auth::login($user);
-
-        $request->session()->regenerate();
-
-        return redirect('/warga/biodata');
+        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login menggunakan akun Anda.');
     }
 
-    // Logout
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

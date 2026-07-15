@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Biodata extends Model
 {
-    // Menghubungkan model secara eksplisit ke tabel fisik di database Anda
+    use HasFactory;
+
     protected $table = 'biodatas';
 
-    // WAJIB DAFTARKAN SEMUA KOLOM INPUT DI SINI
+    // WAJIB: Daftarkan kolom agar bisa disimpan ke database
     protected $fillable = [
-        'user_id', 
-        'nik', 
-        'nama', 
-        'alamat', 
-        'no_hp'
+        'user_id',
+        'nik',
+        'nama',
+        'alamat',
+        'no_hp',
+        'jenis_kelamin',
     ];
 
     public function user()

@@ -10,27 +10,30 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Isi langsung menggunakan Query Builder untuk menghindari proteksi model
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('users')->truncate();
+        DB::table('pelayanans')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         DB::table('users')->insert([
             [
-                'id' => 'admin',
                 'name' => 'Admin Dukcapil',
                 'email' => 'admin@gmail.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('admin'),
+                'role' => 'admin',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 'warga',
                 'name' => 'Warga Contoh',
                 'email' => 'warga@gmail.com',
                 'password' => Hash::make('password'),
+                'role' => 'warga',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
         ]);
 
-        // Isi master data pelayanan
         DB::table('pelayanans')->insert([
             ['id' => 1, 'nama_layanan' => 'KTP', 'created_at' => now(), 'updated_at' => now()],
             ['id' => 2, 'nama_layanan' => 'KK', 'created_at' => now(), 'updated_at' => now()],
