@@ -5,6 +5,19 @@ use App\Http\Controllers\SistemPelayananController;
 use App\Http\Controllers\AuthController; 
 
 // ==========================================
+// RUTE UTAMA & BEBAS (OTOMATIS MENGALIHKAN SESUAI STATUS LOGIN)
+// ==========================================
+Route::get('/', function () {
+    if (auth()->check()) {
+        if (auth()->user()->role === 'admin') {
+            return redirect('/admin/laporan');
+        }
+        return redirect('/warga/riwayat');
+    }
+    return redirect('/login');
+});
+
+// ==========================================
 // RUTE KHUSUS TAMU (HANYA BISA DIAKSES JIKA BELUM LOGIN)
 // ==========================================
 Route::middleware('guest')->group(function () {
@@ -22,16 +35,8 @@ Route::middleware(['auth'])->group(function () {
     
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // BUGFIX: Dialihkan secara dinamis sesuai role saat mengakses domain utama "/"
-    Route::get('/', function () { 
-        if (auth()->user()->isAdmin()) {
-            return redirect('/admin/laporan');
-        }
-        return redirect('/warga/riwayat'); 
-    });
-
     // ------------------------------------------
-    // ALUR KHUSUS WARGA (Hanya untuk Warga)
+    // ALUR KHUSUS WARGA
     // ------------------------------------------
     Route::get('/warga/biodata', [SistemPelayananController::class, 'formBiodata']);
     Route::post('/warga/biodata', [SistemPelayananController::class, 'simpanBiodata']);
@@ -42,12 +47,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/warga/layanan/upload', [SistemPelayananController::class, 'simpanUpload']);
 
     Route::get('/warga/riwayat', [SistemPelayananController::class, 'riwayatWarga']);
+    Route::get('/warga/cetak/{id}', [SistemPelayananController::class, 'cetakDokumen']); // Rute cetak warga
 
     // ------------------------------------------
-    // ALUR KHUSUS ADMIN (Hanya untuk Admin)
+    // ALUR KHUSUS ADMIN
     // ------------------------------------------
     Route::get('/admin/laporan', [SistemPelayananController::class, 'laporanAdmin']);
     Route::get('/admin/laporan/periksa/{id}', [SistemPelayananController::class, 'periksaData']);
     Route::post('/admin/laporan/validasi/{id}', [SistemPelayananController::class, 'simpanValidasi']);
-    Route::get('/admin/laporan/cetak/{id}', [SistemPelayananController::class, 'cetakDokumen']);
+    Route::get('/admin/laporan/cetak/{id}', [SistemPelayananController::class, 'cetakDokumen']); // Rute cetak admin
 });

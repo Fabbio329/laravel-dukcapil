@@ -146,8 +146,9 @@ class SistemPelayananController extends Controller
     }
 
     // Cetak Dokumen
-    public function cetakDokumen($id) {
-        $pengajuan = Pengajuan::with(['user.biodata', 'pelayanan', 'dokumen'])->findOrFail($id);
-        return view('admin.cetak', compact('pengajuan'));
+   public function cetakDokumen($id) {
+    $pengajuan = Pengajuan::with(['user.biodata', 'pelayanan'])->findOrFail($id);
+    
+    return view('admin.cetak', compact('pengajuan'));
     }
 }
