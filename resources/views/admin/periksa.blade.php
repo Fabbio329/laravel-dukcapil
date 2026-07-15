@@ -88,6 +88,33 @@
                 <div class="alert alert-secondary d-inline-block px-4">Keputusan Final: <strong>{{ strtoupper($pengajuan->status) }}</strong></div>
             @endif
 
+            @if($pengajuan->status == 'request_delete')
+            <div class="alert alert-warning border-warning p-4 rounded shadow-sm my-4">
+                <h5 class="fw-bold text-dark"><i class="bi bi-exclamation-triangle-fill"></i> Warga Mengajukan Penghapusan Dokumen</h5>
+                <p class="text-muted small">Warga memohon agar pengajuan layanan ini dibatalkan dan seluruh berkas pendukungnya dihapus dari database.</p>
+                
+                <div class="d-flex gap-2 mt-3">
+                    <!-- Form Setujui Hapus -->
+                    <form action="/admin/laporan/pembatalan/{{ $pengajuan->id }}" method="POST" onsubmit="return confirm('PERINGATAN: Menyetujui akan menghapus data dan semua berkas fisik dari server secara permanen. Lanjutkan?')">
+                        @csrf
+                        <input type="hidden" name="keputusan" value="setujui">
+                        <button type="submit" class="btn btn-danger fw-bold">
+                            <i class="bi bi-check-circle"></i> Setujui & Hapus Permanen
+                        </button>
+                    </form>
+
+                    <!-- Form Tolak Hapus -->
+                    <form action="/admin/laporan/pembatalan/{{ $pengajuan->id }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="keputusan" value="tolak">
+                        <button type="submit" class="btn btn-secondary fw-bold">
+                            <i class="bi bi-x-circle"></i> Tolak Penghapusan (Tetap Proses)
+                        </button>
+                    </form>
+                </div>
+            </div>
+        @endif
+
             <div class="mt-4">
                 <a href="/admin/laporan" class="btn btn-outline-secondary btn-sm">Kembali ke Laporan</a>
             </div>

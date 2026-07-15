@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Biodata;
 use App\Models\Pelayanan;
@@ -142,6 +143,49 @@ class SistemPelayananController extends Controller
             $status_final = $request->input('status_final');
             $pengajuan->update(['status' => $status_final]);
             return redirect('/admin/laporan')->with('success', 'Keputusan final berhasil disimpan.');
+        }
+    }
+
+    //Proses pembatalan Warga
+    public function mintaBatal($id)
+    {
+        // Cari pengajuan yang hanya milik warga bersangkutan
+        $pengajuan = Pengajuan::where('user_id', auth()->id())->findOrFail($id);
+
+        // Warga hanya boleh membatalkan jika statusnya masih 'pending' atau 'lolos_validasi'
+        if (in_array($pengajuan->status, ['pending', 'lolos_validasi'])) {
+            $pengajuan->update(['status' => 'request_delete']);
+            return redirect()->back()->with('success', 'Permintaan pembatalan pengajuan telah dikirim ke admin.');
+        }
+
+        return redirect()->back()->with('error', 'Pengajuan yang sudah disetujui/ditolak tidak dapat dibatalkan.');
+    }
+
+    // Proses pembatalan Admin
+    public function prosesBatal(Request $request, $id)
+    {
+        $pengajuan = Pengajuan::with('dokumen')->findOrFail($id);
+        $keputusan = $request->input('keputusan'); // 'setujui' atau 'tolak'
+
+        if ($keputusan == 'setujui') {
+            // Hapus file fisik di storage agar tidak memenuhi server
+            foreach ($pengajuan->dokumen as $dokumen) {
+                if (strpos($dokumen->file_path, 'text:') !== 0) {
+                    Storage::disk('public')->delete($dokumen->file_path);
+                }
+                $dokumen->delete(); // Hapus baris dokumen persyaratan
+            }
+
+            // Hapus data pengajuan induk
+            $pengajuan->delete();
+
+            return redirect('/admin/laporan')->with('success', 'Pengajuan dan berkas fisiknya telah dihapus permanen dari sistem.');
+        } 
+        
+        if ($keputusan == 'tolak') {
+            // Kembalikan status ke 'pending' jika admin menolak pembatalan
+            $pengajuan->update(['status' => 'pending']);
+            return redirect()->back()->with('success', 'Permintaan pembatalan ditolak. Pengajuan kembali aktif.');
         }
     }
 

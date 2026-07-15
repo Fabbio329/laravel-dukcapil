@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($pengajuan_warga as $index => $p)
+                   @forelse($pengajuan_warga as $index => $p)
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td><strong>{{ $p->pelayanan->nama_layanan }}</strong></td>
@@ -38,6 +38,8 @@
                                 <span class="badge bg-success">Disetujui / Selesai</span>
                             @elseif($p->status == 'rejected')
                                 <span class="badge bg-danger">Ditolak</span>
+                            @elseif($p->status == 'request_delete')
+                                <span class="badge bg-dark">Menunggu Persetujuan Hapus</span>
                             @else
                                 <span class="badge bg-secondary">{{ $p->status }}</span>
                             @endif
@@ -47,9 +49,17 @@
                                 <a href="/warga/cetak/{{ $p->id }}" target="_blank" class="btn btn-sm btn-success fw-bold">
                                     <i class="bi bi-printer"></i> Cetak Dokumen
                                 </a>
+                            @elseif($p->status == 'pending' || $p->status == 'lolos_validasi')
+                                <!-- Tombol Minta Batal/Hapus -->
+                                <form action="/warga/riwayat/batal/{{ $p->id }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan/menghapus pengajuan ini?')" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-outline-danger fw-bold">
+                                        <i class="bi bi-trash"></i> Ajukan Batal
+                                    </button>
+                                </form>
                             @else
                                 <button class="btn btn-sm btn-light text-muted fw-bold" disabled>
-                                    <i class="bi bi-hourglass-split"></i> Belum Tersedia
+                                    <i class="bi bi-lock-fill"></i> Terkunci
                                 </button>
                             @endif
                         </td>

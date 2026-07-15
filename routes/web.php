@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/warga/riwayat', [SistemPelayananController::class, 'riwayatWarga']);
     Route::get('/warga/cetak/{id}', [SistemPelayananController::class, 'cetakDokumen']); // Rute cetak warga
 
+    Route::post('/warga/riwayat/batal/{id}', [SistemPelayananController::class, 'mintaBatal']);
+
     // ------------------------------------------
     // ALUR KHUSUS ADMIN
     // ------------------------------------------
@@ -56,4 +58,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/laporan/periksa/{id}', [SistemPelayananController::class, 'periksaData']);
     Route::post('/admin/laporan/validasi/{id}', [SistemPelayananController::class, 'simpanValidasi']);
     Route::get('/admin/laporan/cetak/{id}', [SistemPelayananController::class, 'cetakDokumen']); // Rute cetak admin
+
+    Route::post('/admin/laporan/pembatalan/{id}', [SistemPelayananController::class, 'prosesBatal']);
 });
